@@ -24,6 +24,8 @@ public:
 
     virtual bool check_dead() const;
 
+    bool is_colliding(Rect object1);
+
 protected:
     int health_;
     Rect bounding_box_;

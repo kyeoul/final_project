@@ -22,8 +22,6 @@ public:
 
     Character get_player() const;
 
-
-
     explicit Model();
 
     int player_width = 100;
