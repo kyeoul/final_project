@@ -13,4 +13,5 @@ private:
     Model const& model_;
 
     ge211::sprites::Rectangle_sprite player_sprite;
+    ge211::sprites::Rectangle_sprite enemy_sprite;
 };

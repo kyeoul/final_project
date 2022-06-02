@@ -22,7 +22,9 @@ public:
 
     void spawn_enemy();
 
-    void next(int dt);
+    std::vector<Enemy> get_list_enemies() const;
+
+    void on_frame(double dt);
 
     Player get_player() const;
 
@@ -33,7 +35,7 @@ private:
 
     Player player;
 
-    std::vector<Character> list_enemies;
+    std::vector<Enemy> list_enemies;
 
     Dimensions screen_dims;
 

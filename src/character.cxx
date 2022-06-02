@@ -3,8 +3,7 @@
 Character::Character(int health, Dims size, Posn position)
     : health_(health),
       bounding_box_(position.x, position.y, size.width, size.height),
-      is_live_(true),
-      velocity_(10, 10)
+      is_live_(true)
 {
 
 }
@@ -26,7 +25,7 @@ Character::get_box()
 }
 
 bool
-Character::check_dead() const
+Character::check_live() const
 {
     return is_live_;
 }
@@ -83,4 +82,33 @@ Player::Rect
 Player::get_box()
 {
     return Character::get_box();
+}
+
+bool
+Player::check_live() const
+{
+    return Character::check_live();
+}
+
+Enemy::Enemy(int health, Dims size, Posn pos, Dims velocity):
+       Character(health, size, pos),
+       velocity_(velocity)
+{}
+
+Enemy::Rect
+Enemy::get_box()
+{
+    return Character::get_box();
+}
+
+bool
+Enemy::check_live() const
+{
+    return Character::check_live();
+}
+
+void Enemy::move_enemy(double dt)
+{
+    bounding_box_.x += velocity_.width * dt;
+    bounding_box_.y += velocity_.height * dt;
 }

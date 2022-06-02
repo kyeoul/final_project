@@ -33,3 +33,9 @@ Controller::on_key(ge211::Key key)
         model_.move_player_horizontally(10);
     }
 }
+
+void
+Controller::on_frame(double dt)
+{
+    model_.on_frame(dt);
+}
