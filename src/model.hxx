@@ -2,6 +2,7 @@
 
 #include <ge211.hxx>
 #include "character.hxx"
+#include "proj.hxx"
 
 class Model
 {
@@ -21,6 +22,12 @@ public:
     void move_player_vertically(int y);
 
     void spawn_enemy();
+
+    std::vector<Bullet> bullets;
+
+    std::vector<Bullet> get_bullets() const;
+
+    void fire_bullet();
 
     std::vector<Enemy> get_list_enemies() const;
 

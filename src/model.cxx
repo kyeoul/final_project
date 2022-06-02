@@ -58,6 +58,10 @@ Model::on_frame(double dt)
         for(Enemy& enemy: list_enemies){
             enemy.move_enemy(dt);
         }
+        for(Bullet& bullet: bullets)
+        {
+            bullet.next(dt);
+        }
     }
 }
 
@@ -73,6 +77,13 @@ Model::get_list_enemies() const
     return list_enemies;
 }
 
+std::vector<Bullet>
+Model::get_bullets() const
+{
+    return bullets;
+}
+
+
 void
 Model::move_player_horizontally(int x){
     player.move_player_horizontally(x);
@@ -82,4 +93,11 @@ void
 Model::move_player_vertically(int y)
 {
     player.move_player_vertically(y);
+}
+
+void
+Model::fire_bullet()
+{
+    Bullet new_bullet(player.get_box().center(), {0, 100});
+    bullets.push_back(new_bullet);
 }
