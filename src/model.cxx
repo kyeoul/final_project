@@ -1,10 +1,17 @@
 #include "model.hxx"
 
-Model::Model()
-    : player(3, Dimensions(player_width, player_height), Position(0, 0))
+Model::Model(ge211::Dims<int> screen_dims)
+    : player(3,
+             Dimensions(player_width, player_height),
+             Position((screen_dims.width - player_width)/2,
+                      (screen_dims.height - player_height)/2)),
+      screen_dims(screen_dims),
+      random_x_coor_(-player_width, screen_dims.width + player_width),
+      random_y_coor_(-player_height, screen_dims.height + player_height),
+      random_speed_(-5, 5)
 {}
 
-Character
+Player
 Model::get_player() const
 {
     return player;

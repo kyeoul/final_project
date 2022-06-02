@@ -3,7 +3,8 @@
 Character::Character(int health, Dims size, Posn position)
     : health_(health),
       bounding_box_(position.x, position.y, size.width, size.height),
-      is_live_(true)
+      is_live_(true),
+      velocity_(10, 10)
 {
 
 }
@@ -16,18 +17,6 @@ Character::increment_health(int change)
     if (health_ <= 0){
         is_live_ = false;
     }
-}
-
-void
-Character::move_player_horizontally(int x)
-{
-    bounding_box_.x += x;
-}
-
-void
-Character::move_player_vertically(int y)
-{
-    bounding_box_.y += y;
 }
 
 Character::Rect
@@ -70,4 +59,28 @@ Character::is_colliding(Character::Rect object1)
     }
 
     return true;
+}
+
+Player::Player(int health, Dims size, Posn pos):
+        Character(health, size, pos)
+{
+
+}
+
+void
+Player::move_player_horizontally(int x)
+{
+    bounding_box_.x += x;
+}
+
+void
+Player::move_player_vertically(int y)
+{
+    bounding_box_.y += y;
+}
+
+Player::Rect
+Player::get_box()
+{
+    return Character::get_box();
 }

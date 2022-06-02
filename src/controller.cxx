@@ -1,13 +1,20 @@
 #include "controller.hxx"
 
-Controller::Controller()
-        : view_(model_)
+Controller::Controller(ge211::Dims<int> screen_dims)
+        : model_(screen_dims),
+          view_(model_),
+          screen_dims(screen_dims)
 { }
 
 void
 Controller::draw(ge211::Sprite_set& set)
 {
     view_.draw(set);
+}
+
+ge211::Dims<int>
+Controller::initial_window_dimensions() const{
+    return screen_dims;
 }
 
 void

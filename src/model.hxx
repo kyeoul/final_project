@@ -14,21 +14,30 @@ public:
 
     using Position = ge211::Posn<int>;
 
+    Model(Dimensions screen_dims);
+
     void move_player_horizontally(int x);
 
     void move_player_vertically(int y);
 
-    void move_player_to_center(Dimensions);
+    void spawn_enemy();
 
-    Character get_player() const;
+    void next(int dt);
 
-    explicit Model();
+    Player get_player() const;
 
     int player_width = 100;
 
     int player_height = 100;
 private:
 
-    Character player;
+    Player player;
 
+    std::vector<Character> list_enemies;
+
+    Dimensions screen_dims;
+
+    ge211::Random_source<int> random_x_coor_;
+    ge211::Random_source<int> random_y_coor_;
+    ge211::Random_source<int> random_speed_;
 };
