@@ -11,11 +11,11 @@ public:
 
     using Rectangle = ge211::Rect<int>;
 
-    using Dimensions = ge211::Dims<int>;
+    using Dimensions = ge211::Dims<double>;
 
-    using Position = ge211::Posn<int>;
+    using Position = ge211::Posn<double>;
 
-    Model(Dimensions screen_dims);
+    Model(ge211::Dims<int> screen_dims);
 
     void move_player_horizontally(int x);
 
@@ -35,6 +35,14 @@ public:
 
     Player get_player() const;
 
+    bool hits_top(ge211::Rect<double> block);
+
+    bool hits_bottom(ge211::Rect<double> block);
+
+    bool hits_side(ge211::Rect<double> block);
+
+    void move_aim(ge211::Posn<int> position);
+
     int player_width = 100;
 
     int player_height = 100;
@@ -46,7 +54,8 @@ private:
 
     Dimensions screen_dims;
 
+    Dimensions current_aim;
+
     ge211::Random_source<int> random_x_coor_;
-    ge211::Random_source<int> random_y_coor_;
     ge211::Random_source<int> random_speed_;
 };

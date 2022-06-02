@@ -6,21 +6,21 @@ class Character
 {
 public:
 
-    using Dims = ge211::Dims<int>;
+    using Dims = ge211::Dims<double>;
 
-    using Posn = ge211::Posn<int>;
+    using Posn = ge211::Posn<double>;
 
-    using Rect = ge211::Rect<int>;
+    using Rect = ge211::Rect<double>;
 
     Character(int health, Dims size, Posn position);
 
-    void increment_health(int change);
+    virtual void increment_health(int change);
 
-    bool check_live() const;
+    virtual bool check_live() const;
 
-    bool is_colliding(Rect object1);
+    virtual bool is_colliding(Rect object1);
 
-    Rect get_box();
+    virtual Rect get_box();
 
 protected:
     int health_;
@@ -31,11 +31,11 @@ protected:
 class Player: Character
 {
 public:
-    using Dims = ge211::Dims<int>;
+    using Dims = ge211::Dims<double>;
 
-    using Posn = ge211::Posn<int>;
+    using Posn = ge211::Posn<double>;
 
-    using Rect = ge211::Rect<int>;
+    using Rect = ge211::Rect<double>;
 
     Player(int health, Dims size, Posn pos);
 
@@ -45,16 +45,20 @@ public:
 
     Rect get_box();
     bool check_live() const;
+
+    bool is_colliding(Rect object1);
+
+    void increment_health(int change);
 };
 
 class Enemy: Character
 {
 public:
-    using Dims = ge211::Dims<int>;
+    using Dims = ge211::Dims<double>;
 
-    using Posn = ge211::Posn<int>;
+    using Posn = ge211::Posn<double>;
 
-    using Rect = ge211::Rect<int>;
+    using Rect = ge211::Rect<double>;
 
     Enemy(int health, Dims size, Posn pos, Dims velocity);
 
@@ -62,6 +66,13 @@ public:
     bool check_live() const;
 
     void move_enemy(double dt);
+
+    void reflect_vert();
+    void reflect_horiz();
+
+    bool is_colliding(Rect object1);
+
+    void increment_health(int change);
 private:
     Dims velocity_;
 };

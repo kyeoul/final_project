@@ -90,6 +90,18 @@ Player::check_live() const
     return Character::check_live();
 }
 
+bool
+Player::is_colliding(Rect object1)
+{
+    return Character::is_colliding(object1);
+}
+
+void
+Player::increment_health(int change)
+{
+    Character::increment_health(change);
+}
+
 Enemy::Enemy(int health, Dims size, Posn pos, Dims velocity):
        Character(health, size, pos),
        velocity_(velocity)
@@ -111,4 +123,26 @@ void Enemy::move_enemy(double dt)
 {
     bounding_box_.x += velocity_.width * dt;
     bounding_box_.y += velocity_.height * dt;
+}
+
+void Enemy::reflect_horiz()
+{
+    velocity_.width *= -1;
+}
+
+void Enemy::reflect_vert()
+{
+    velocity_.height *= -1;
+}
+
+bool
+Enemy::is_colliding(Rect object1)
+{
+    return Character::is_colliding(object1);
+}
+
+void
+Enemy::increment_health(int change)
+{
+    Character::increment_health(change);
 }

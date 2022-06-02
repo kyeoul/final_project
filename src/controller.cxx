@@ -42,3 +42,9 @@ Controller::on_frame(double dt)
 {
     model_.on_frame(dt);
 }
+
+void
+Controller::on_mouse_move(ge211::Posn<int> position)
+{
+    model_.move_aim(position);
+}

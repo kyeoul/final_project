@@ -16,6 +16,8 @@ public:
 
     void on_frame(double dt) override;
 
+    void on_mouse_move(ge211::Posn<int> position) override;
+
 protected:
     void draw(ge211::Sprite_set& set) override;
 
