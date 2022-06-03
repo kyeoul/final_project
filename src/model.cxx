@@ -64,7 +64,14 @@ Model::on_frame(double dt)
                 enemy.reflect_horiz();
             }
             else if(player.is_colliding(enemy.get_box())){
-                player.increment_health(-1);
+                if (timer > 100){
+                    player.increment_health(-1);
+                    if (!player.check_live()){
+                        exit(3);
+                    }
+
+                    timer = 0;
+                }
             }
 
             for(Bullet& bullet: bullets)
@@ -91,6 +98,14 @@ Model::on_frame(double dt)
             }
 
             enemy.move_enemy(dt);
+        }
+
+        timer++;
+
+        if (list_enemies.empty()){
+            for(int i = 0; i < 10; i++){
+                spawn_enemy();
+            }
         }
     }
 }

@@ -46,6 +46,8 @@ public:
     int player_width = 100;
 
     int player_height = 100;
+
+    int timer = 100;
 private:
 
     Player player;
