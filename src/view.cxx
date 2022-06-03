@@ -18,16 +18,16 @@ View::draw(ge211::Sprite_set& set)
 {
     if (!model_.is_player_invuln()){
         set.add_sprite(player_sprite, model_.get_player().get_box().top_left()
-        .into<int>());
+        .into<int>(), 1);
     }
     else{
         set.add_sprite(player_damaged_sprite, model_.get_player().get_box()
-        .top_left().into<int>());
+        .top_left().into<int>(), 1);
     }
 
     for (Enemy enemy: model_.get_list_enemies()){
         set.add_sprite(enemy_sprite,
-                       enemy.get_box().top_left().into<int>());
+                       enemy.get_box().top_left().into<int>(), 2);
     }
 
     for (Bullet bullets: model_.get_bullets()){

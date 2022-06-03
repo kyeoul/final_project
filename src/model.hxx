@@ -23,8 +23,6 @@ public:
 
     void spawn_enemy();
 
-    std::vector<Bullet> bullets;
-
     std::vector<Bullet> get_bullets() const;
 
     void fire_bullet();
@@ -56,6 +54,10 @@ private:
 
     std::vector<Enemy> list_enemies;
 
+    std::vector<Bullet> bullets;
+
+    std::vector<Assists> assists;
+
     Dimensions screen_dims;
 
     Dimensions current_aim;
@@ -65,6 +67,9 @@ private:
     int player_fire_timer = 15;
 
     int score;
+
+    int radius;
+    int speed;
 
     ge211::Random_source<int> random_x_coor_;
     ge211::Random_source<int> random_speed_;

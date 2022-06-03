@@ -157,3 +157,19 @@ Enemy::increment_health(int change)
 {
     Character::increment_health(change);
 }
+
+Assists::Assists(
+        Dims size,
+        Posn position,
+        int bullet_multiple,
+        int health_increase):
+        Character(1, size, position),
+        bullet_multiple(bullet_multiple),
+        health_increase(health_increase)
+{}
+
+std::pair<int, int>
+Assists::get_benefits()
+{
+    return std::make_pair(bullet_multiple, health_increase);
+}

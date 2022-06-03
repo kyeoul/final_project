@@ -8,6 +8,8 @@ Model::Model(ge211::Dims<int> screen_dims)
       screen_dims(screen_dims),
       current_aim(0, 0),
       score(0),
+      radius(10),
+      speed(500),
       random_x_coor_(0, screen_dims.width - player_width),
       random_speed_(50, 100)
 {
@@ -208,7 +210,9 @@ void
 Model::fire_bullet()
 {
     if (player_fire_timer > 15){
-        Bullet new_bullet(player.get_box().center(), 500 * current_aim, 10);
+        Bullet new_bullet(player.get_box().center(),
+                          speed * current_aim,
+                          radius);
         bullets.push_back(new_bullet);
         player_fire_timer = 0;
     }
