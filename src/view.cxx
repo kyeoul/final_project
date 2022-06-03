@@ -9,7 +9,8 @@ View::View(Model const& model)
                                              0}),
           enemy_sprite({50, 50}, {255, 0, 0}),
           enemy_damaged_sprite({50, 50}, {255, 0, 255}),
-          bullet_sprite(10, {0, 0, 255})
+          bullet_sprite(10, {0, 0, 255}),
+          health_sprite(15, {255, 0, 0})
 { }
 
 void
@@ -31,5 +32,14 @@ View::draw(ge211::Sprite_set& set)
 
     for (Bullet bullets: model_.get_bullets()){
         set.add_sprite(bullet_sprite, bullets.get_center().into<int>());
+    }
+
+    ge211::Text_sprite::Builder letter_builder(sans30);
+    letter_builder << "score: " << model_.get_score();
+    score_sprite.reconfigure(letter_builder);
+    set.add_sprite(score_sprite, {10, 10});
+
+    for (int i = 0; i < model_.get_player().get_health(); i++){
+        set.add_sprite(health_sprite, {10 + 35 * i, 60});
     }
 }

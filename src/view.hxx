@@ -17,4 +17,9 @@ private:
     ge211::sprites::Rectangle_sprite enemy_sprite;
     ge211::sprites::Rectangle_sprite enemy_damaged_sprite;
     ge211::sprites::Circle_sprite bullet_sprite;
+
+    ge211::sprites::Circle_sprite health_sprite;
+
+    ge211::Font sans30{"sans.ttf", 30};
+    ge211::Text_sprite score_sprite;
 };

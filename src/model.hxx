@@ -35,6 +35,8 @@ public:
 
     Player get_player() const;
 
+    int get_score() const;
+
     bool is_player_invuln() const;
 
     bool hits_top(ge211::Rect<double> block);
@@ -59,6 +61,10 @@ private:
     Dimensions current_aim;
 
     int player_invuln_timer = 100;
+
+    int player_fire_timer = 15;
+
+    int score;
 
     ge211::Random_source<int> random_x_coor_;
     ge211::Random_source<int> random_speed_;

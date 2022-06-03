@@ -24,6 +24,12 @@ Character::get_box()
     return bounding_box_;
 }
 
+int
+Character::get_health()
+{
+    return health_;
+}
+
 bool
 Character::check_live() const
 {
@@ -81,6 +87,12 @@ Player::Rect
 Player::get_box()
 {
     return Character::get_box();
+}
+
+int
+Player::get_health()
+{
+    return Character::get_health();
 }
 
 bool

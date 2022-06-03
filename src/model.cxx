@@ -7,6 +7,7 @@ Model::Model(ge211::Dims<int> screen_dims)
                       (screen_dims.height - player_height)/2)),
       screen_dims(screen_dims),
       current_aim(0, 0),
+      score(0),
       random_x_coor_(0, screen_dims.width - player_width),
       random_speed_(50, 100)
 {
@@ -53,7 +54,7 @@ Model::spawn_enemy()
 void
 Model::on_frame(double dt)
 {
-    if (player.check_live()){
+    if (score < 50){
 
         for(Enemy& enemy: list_enemies){
 
@@ -73,8 +74,6 @@ Model::on_frame(double dt)
                 }
             }
 
-            player_invuln_timer++;
-
             for(Bullet& bullet: bullets)
             {
 
@@ -83,27 +82,38 @@ Model::on_frame(double dt)
                     if (!enemy.check_live()){
                         enemy = list_enemies.back();
                         list_enemies.pop_back();
+                        score++;
                     }
                     bullet = bullets.back();
                     bullets.pop_back();
                 }
-                else if(hits_bottom(bullet.get_bounding_box()) ||
-                        hits_top(bullet.get_bounding_box()) ||
-                        hits_side(bullet.get_bounding_box())){
-                    bullet = bullets.back();
-                    bullets.pop_back();
-                }
-
-                bullet = bullet.next(dt);
             }
             enemy.move_enemy(dt);
         }
+
+        for (Bullet& bullet: bullets) {
+            if(hits_bottom(bullet.get_bounding_box()) ||
+               hits_top(bullet.get_bounding_box()) ||
+               hits_side(bullet.get_bounding_box())){
+                bullet = bullets.back();
+                bullets.pop_back();
+            }
+
+            bullet = bullet.next(dt);
+        }
+
+        player_invuln_timer++;
 
         if (list_enemies.empty()){
             for(int i = 0; i < 10; i++){
                 spawn_enemy();
             }
         }
+
+        player_fire_timer++;
+    }
+    else{
+        exit(4);
     }
 }
 
@@ -123,6 +133,12 @@ std::vector<Bullet>
 Model::get_bullets() const
 {
     return bullets;
+}
+
+int
+Model::get_score() const
+{
+    return score;
 }
 
 bool Model::is_player_invuln() const
@@ -191,6 +207,9 @@ Model::move_aim(ge211::Posn<int> position)
 void
 Model::fire_bullet()
 {
-    Bullet new_bullet(player.get_box().center(), 200 * current_aim, 10);
-    bullets.push_back(new_bullet);
+    if (player_fire_timer > 15){
+        Bullet new_bullet(player.get_box().center(), 500 * current_aim, 10);
+        bullets.push_back(new_bullet);
+        player_fire_timer = 0;
+    }
 }

@@ -22,6 +22,8 @@ public:
 
     virtual Rect get_box();
 
+    virtual int get_health();
+
 protected:
     int health_;
     Rect bounding_box_;
@@ -44,6 +46,8 @@ public:
     void move_player_vertically(int y);
 
     Rect get_box();
+    int get_health();
+
     bool check_live() const;
 
     bool is_colliding(Rect object1);
