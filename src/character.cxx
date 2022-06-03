@@ -56,7 +56,6 @@ Character::is_colliding(Character::Rect object1)
        bounding_box_.bottom_left().y < object1.top_left().y){
         return false;
     }
-
     return true;
 }
 

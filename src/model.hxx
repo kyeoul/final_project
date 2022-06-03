@@ -35,6 +35,8 @@ public:
 
     Player get_player() const;
 
+    bool is_player_invuln() const;
+
     bool hits_top(ge211::Rect<double> block);
 
     bool hits_bottom(ge211::Rect<double> block);
@@ -46,8 +48,6 @@ public:
     int player_width = 100;
 
     int player_height = 100;
-
-    int timer = 100;
 private:
 
     Player player;
@@ -57,6 +57,8 @@ private:
     Dimensions screen_dims;
 
     Dimensions current_aim;
+
+    int player_invuln_timer = 100;
 
     ge211::Random_source<int> random_x_coor_;
     ge211::Random_source<int> random_speed_;

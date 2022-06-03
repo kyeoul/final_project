@@ -46,7 +46,7 @@ Model::spawn_enemy()
 
     ge211::Dims<double> enemy_velocity = unit_velocity * speed;
 
-    list_enemies.push_back(Enemy(1, {50, 50},
+    list_enemies.push_back(Enemy(2, {50, 50},
                                  candidate_position, enemy_velocity));
 }
 
@@ -64,15 +64,16 @@ Model::on_frame(double dt)
                 enemy.reflect_horiz();
             }
             else if(player.is_colliding(enemy.get_box())){
-                if (timer > 100){
+                if (player_invuln_timer > 100) {
                     player.increment_health(-1);
-                    if (!player.check_live()){
+                    if (!player.check_live()) {
                         exit(3);
                     }
-
-                    timer = 0;
+                    player_invuln_timer = 0;
                 }
             }
+
+            player_invuln_timer++;
 
             for(Bullet& bullet: bullets)
             {
@@ -93,14 +94,10 @@ Model::on_frame(double dt)
                     bullets.pop_back();
                 }
 
-
                 bullet = bullet.next(dt);
             }
-
             enemy.move_enemy(dt);
         }
-
-        timer++;
 
         if (list_enemies.empty()){
             for(int i = 0; i < 10; i++){
@@ -128,6 +125,10 @@ Model::get_bullets() const
     return bullets;
 }
 
+bool Model::is_player_invuln() const
+{
+    return player_invuln_timer < 100;
+}
 
 void
 Model::move_player_horizontally(int x){
@@ -190,6 +191,6 @@ Model::move_aim(ge211::Posn<int> position)
 void
 Model::fire_bullet()
 {
-    Bullet new_bullet(player.get_box().center(), 300 * current_aim, 10);
+    Bullet new_bullet(player.get_box().center(), 200 * current_aim, 10);
     bullets.push_back(new_bullet);
 }
