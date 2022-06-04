@@ -88,6 +88,8 @@ private:
     int radius;
     int speed;
 
+    double bullet_multiplier = 1.2;
+
     ge211::Random_source<int> random_x_coor_;
     ge211::Random_source<int> random_y_coor_;
     ge211::Random_source<int> random_speed_;

@@ -66,7 +66,7 @@ Model::spawn_assist()
 
     if(heart_or_weapon_boost_.next() == 1)
     {
-        assists.push_back(Assists({20, 20}, candidate_position, 1.2, 0));
+        assists.push_back(Assists({20, 20}, candidate_position, bullet_multiplier, 0));
     }else if(heart_or_weapon_boost_.next() == 2)
     {
         assists.push_back(Assists({20, 20}, candidate_position, 0, 1));
@@ -131,7 +131,7 @@ Model::on_frame(double dt)
                     player.increment_health(1);
                     assist = assists.back();
                     assists.pop_back();
-                }else if(assist.get_benefits().first == 1.5)
+                }else if(assist.get_benefits().first == bullet_multiplier)
                 {
                     radius *= assist.get_benefits().first;
                     assist = assists.back();
