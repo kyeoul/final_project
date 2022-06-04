@@ -69,6 +69,7 @@ public:
     Rect get_box();
     Dims get_velocity();
     bool check_live() const;
+    int get_health();
 
     void move_enemy(double dt);
 

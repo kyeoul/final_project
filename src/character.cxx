@@ -124,6 +124,12 @@ Enemy::get_box()
     return Character::get_box();
 }
 
+int
+Enemy::get_health()
+{
+    return Character::get_health();
+}
+
 Enemy::Dims
 Enemy::get_velocity()
 {
