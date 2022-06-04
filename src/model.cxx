@@ -66,10 +66,11 @@ Model::spawn_assist()
 
     if(heart_or_weapon_boost_.next() == 1)
     {
-        assists.push_back(Assists({20, 20}, candidate_position, bullet_multiplier, 0));
+        assists.push_back(Assists({40, 40}, candidate_position,
+                                  bullet_multiplier, 0));
     }else if(heart_or_weapon_boost_.next() == 2)
     {
-        assists.push_back(Assists({20, 20}, candidate_position, 0, 1));
+        assists.push_back(Assists({40, 40}, candidate_position, 0, 1));
     }
 }
 
