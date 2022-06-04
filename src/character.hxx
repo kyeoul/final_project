@@ -67,6 +67,7 @@ public:
     Enemy(int health, Dims size, Posn pos, Dims velocity);
 
     Rect get_box();
+    Dims get_velocity();
     bool check_live() const;
 
     void move_enemy(double dt);
@@ -89,16 +90,17 @@ public:
 
     // if you want powerup to be a health increase, set bullet_multiple = 1
     // if you want powerup to be a bullet upgrade, set health_increase = 0
-    Assists(Dims size, Posn position, int bullet_multiple, int health_increase);
+    Assists(Dims size, Posn position, double bullet_multiple, int
+    health_increase);
 
     // access the bullet multiple by doing output.first
     // access the health increase by doing output.second
-    std::pair<int, int> get_benefits();
+    std::pair<double, int> get_benefits();
 
     Rect get_box();
 
     void increment_health(int change);
 private:
-    int bullet_multiple;
+    double bullet_multiple;
     int health_increase;
 };
