@@ -87,7 +87,7 @@ Model::on_frame(double dt)
                 enemy.reflect_horiz();
             }
             else if(player.is_colliding(enemy.get_box())){
-                if (player_invuln_timer > 100) {
+                if (player_invuln_timer >= 100) {
                     player.increment_health(-1);
                     if (!player.check_live()) {
                         exit(3);

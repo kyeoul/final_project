@@ -124,6 +124,12 @@ Enemy::get_box()
     return Character::get_box();
 }
 
+Enemy::Dims
+Enemy::get_velocity()
+{
+    return velocity_;
+}
+
 bool
 Enemy::check_live() const
 {

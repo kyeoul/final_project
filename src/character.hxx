@@ -67,6 +67,7 @@ public:
     Enemy(int health, Dims size, Posn pos, Dims velocity);
 
     Rect get_box();
+    Dims get_velocity();
     bool check_live() const;
 
     void move_enemy(double dt);
