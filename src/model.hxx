@@ -35,6 +35,8 @@ public:
 
     int get_score() const;
 
+    int get_radius() const;
+
     bool is_player_invuln() const;
 
     bool hits_top(ge211::Rect<double> block);

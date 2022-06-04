@@ -19,20 +19,25 @@ View::draw(ge211::Sprite_set& set)
 {
     if (!model_.is_player_invuln()){
         set.add_sprite(player_sprite, model_.get_player().get_box().top_left()
-        .into<int>(), 1);
+        .into<int>(), 2);
     }
     else{
         set.add_sprite(player_damaged_sprite, model_.get_player().get_box()
-        .top_left().into<int>(), 1);
+        .top_left().into<int>(), 2);
     }
 
     for (Enemy enemy: model_.get_list_enemies()){
         set.add_sprite(enemy_sprite,
-                       enemy.get_box().top_left().into<int>(), 2);
+                       enemy.get_box().top_left().into<int>(), 3);
     }
 
     for (Bullet bullets: model_.get_bullets()){
-        set.add_sprite(bullet_sprite, bullets.get_center().into<int>());
+
+        double scale = (double) model_.get_radius() / 10.0;
+
+        ge211::Transform my_transform = ge211::Transform{}.set_scale(scale);
+        set.add_sprite(bullet_sprite, bullets.get_bounding_box().top_left()
+        .into<int>(), 1, my_transform);
     }
 
     for (Assists assists: model_.get_assists()){

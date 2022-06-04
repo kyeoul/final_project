@@ -11,7 +11,7 @@ Model::Model(ge211::Dims<int> screen_dims)
       radius(10),
       speed(500),
       random_x_coor_(0, screen_dims.width - player_width),
-      random_y_coor_(0, screen_dims.height),
+      random_y_coor_(0, screen_dims.height - 40),
       random_speed_(50, 100),
       chance_of_assist_spawn_(1, 100),
       heart_or_weapon_boost_(1, 2)
@@ -39,7 +39,7 @@ Model::spawn_enemy()
     //     candidate_position.y = random_y_coor_.next();
     // }
 
-    int speed = random_speed_.next();
+    int speed_enemy = random_speed_.next();
 
     Dimensions velocity = {player.get_box().center().x -
                                 candidate_position.x, player.get_box().center()
@@ -50,7 +50,7 @@ Model::spawn_enemy()
             .height, 2));
     ge211::Dims<double> unit_velocity = velocity / magnitude;
 
-    ge211::Dims<double> enemy_velocity = unit_velocity * speed;
+    ge211::Dims<double> enemy_velocity = unit_velocity * speed_enemy;
 
     list_enemies.push_back(Enemy(2, {50, 50},
                                  candidate_position, enemy_velocity));
@@ -66,7 +66,7 @@ Model::spawn_assist()
 
     if(heart_or_weapon_boost_.next() == 1)
     {
-        assists.push_back(Assists({20, 20}, candidate_position, 1.5, 0));
+        assists.push_back(Assists({20, 20}, candidate_position, 1.2, 0));
     }else if(heart_or_weapon_boost_.next() == 2)
     {
         assists.push_back(Assists({20, 20}, candidate_position, 0, 1));
@@ -133,7 +133,7 @@ Model::on_frame(double dt)
                     assists.pop_back();
                 }else if(assist.get_benefits().first == 1.5)
                 {
-                    radius += 1000;
+                    radius *= assist.get_benefits().first;
                     assist = assists.back();
                     assists.pop_back();
                 }
@@ -143,15 +143,11 @@ Model::on_frame(double dt)
         player_invuln_timer++;
 
         if (list_enemies.empty()){
+            spawn_assist();
             for(int i = 0; i < 10; i++){
                 spawn_enemy();
             }
         }
-
-        if(chance_of_assist_spawn_.next() == 20){
-            spawn_assist();
-        }
-
         player_fire_timer++;
     }
     else{
@@ -187,6 +183,11 @@ int
 Model::get_score() const
 {
     return score;
+}
+
+int
+Model::get_radius() const{
+    return radius;
 }
 
 bool Model::is_player_invuln() const
