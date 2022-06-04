@@ -10,8 +10,8 @@ View::View(Model const& model)
           enemy_sprite({50, 50}, {255, 0, 0}),
           enemy_damaged_sprite({50, 50}, {255, 0, 255}),
           bullet_sprite(10, {0, 0, 255}),
-          health_sprite(15, {255, 0, 0}),
-          assist_sprite(20, {0, 255, 255})
+          powerup_sprite(20, {0, 255, 255}),
+          heart_sprite("heart.png")
 { }
 
 void
@@ -41,7 +41,17 @@ View::draw(ge211::Sprite_set& set)
     }
 
     for (Assists assists: model_.get_assists()){
-        set.add_sprite(assist_sprite, assists.get_box().top_left().into<int>());
+
+        if (assists.get_benefits().first != 0){
+            set.add_sprite(powerup_sprite, assists.get_box().top_left()
+            .into<int>());
+        }
+        else{
+            double scale = 1.0/22.5;
+            ge211::Transform my_transform = ge211::Transform{}.set_scale(scale);
+            set.add_sprite(heart_sprite, assists.get_box().top_left().into<int>
+                    (), 1, my_transform);
+        }
     }
 
     ge211::Text_sprite::Builder letter_builder(sans30);
@@ -50,6 +60,8 @@ View::draw(ge211::Sprite_set& set)
     set.add_sprite(score_sprite, {10, 10});
 
     for (int i = 0; i < model_.get_player().get_health(); i++){
-        set.add_sprite(health_sprite, {10 + 35 * i, 60});
+        double scale = 1.0/22.5;
+        ge211::Transform my_transform = ge211::Transform{}.set_scale(scale);
+        set.add_sprite(heart_sprite, {10 + 35 * i, 60}, 4, my_transform);
     }
 }

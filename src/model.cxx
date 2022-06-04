@@ -11,7 +11,7 @@ Model::Model(ge211::Dims<int> screen_dims)
       radius(10),
       speed(500),
       random_x_coor_(0, screen_dims.width - player_width),
-      random_y_coor_(0, screen_dims.height - 40),
+      random_y_coor_(0, screen_dims.height * 0.75),
       random_speed_(50, 100),
       chance_of_assist_spawn_(1, 100),
       heart_or_weapon_boost_(1, 2)
