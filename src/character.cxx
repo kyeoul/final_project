@@ -173,3 +173,15 @@ Assists::get_benefits()
 {
     return std::make_pair(bullet_multiple, health_increase);
 }
+
+Character::Rect
+Assists::get_box()
+{
+    return Character::get_box();
+}
+
+void
+Assists::increment_health(int change)
+{
+    Character::increment_health(change);
+}

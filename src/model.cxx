@@ -11,7 +11,10 @@ Model::Model(ge211::Dims<int> screen_dims)
       radius(10),
       speed(500),
       random_x_coor_(0, screen_dims.width - player_width),
-      random_speed_(50, 100)
+      random_y_coor_(0, screen_dims.height),
+      random_speed_(50, 100),
+      chance_of_assist_spawn_(1, 100),
+      heart_or_weapon_boost_(1, 2)
 {
 
     for(int i = 0; i < 10; i++){
@@ -51,6 +54,23 @@ Model::spawn_enemy()
 
     list_enemies.push_back(Enemy(2, {50, 50},
                                  candidate_position, enemy_velocity));
+}
+
+void
+Model::spawn_assist()
+{
+    ge211::Posn<double> candidate_position = {(double) random_x_coor_.next(),
+                                              (double) random_y_coor_.next()};
+
+    ge211::Posn<float> position_float = candidate_position.into<float>();
+
+    if(heart_or_weapon_boost_.next() == 1)
+    {
+        assists.push_back(Assists({20, 20}, candidate_position, 1.5, 0));
+    }else if(heart_or_weapon_boost_.next() == 2)
+    {
+        assists.push_back(Assists({20, 20}, candidate_position, 0, 1));
+    }
 }
 
 void
@@ -104,12 +124,30 @@ Model::on_frame(double dt)
             bullet = bullet.next(dt);
         }
 
+        for(Assists& assist: assists){
+
+            if(player.is_colliding(assist.get_box())){
+                if(assist.get_benefits().second == 1){
+                    player.increment_health(1);
+                    assist.increment_health(-1);
+                }else if(assist.get_benefits().first == 1.5)
+                {
+                    radius += 1000;
+                    assist.increment_health(-1);
+                }
+            }
+        }
+
         player_invuln_timer++;
 
         if (list_enemies.empty()){
             for(int i = 0; i < 10; i++){
                 spawn_enemy();
             }
+        }
+
+        if(chance_of_assist_spawn_.next() == 20){
+            spawn_assist();
         }
 
         player_fire_timer++;
@@ -135,6 +173,12 @@ std::vector<Bullet>
 Model::get_bullets() const
 {
     return bullets;
+}
+
+std::vector<Assists>
+Model::get_assists() const
+{
+    return assists;
 }
 
 int

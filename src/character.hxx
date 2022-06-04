@@ -77,6 +77,8 @@ public:
     bool is_colliding(Rect object1);
 
     void increment_health(int change);
+
+
 private:
     Dims velocity_;
 };
@@ -93,6 +95,9 @@ public:
     // access the health increase by doing output.second
     std::pair<int, int> get_benefits();
 
+    Rect get_box();
+
+    void increment_health(int change);
 private:
     int bullet_multiple;
     int health_increase;

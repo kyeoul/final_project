@@ -48,6 +48,14 @@ public:
     int player_width = 100;
 
     int player_height = 100;
+
+    int timer = 100;
+
+    int enemies_slain = 0;
+
+    void spawn_assist();
+
+    std::vector<Assists> get_assists() const;
 private:
 
     Player player;
@@ -72,5 +80,8 @@ private:
     int speed;
 
     ge211::Random_source<int> random_x_coor_;
+    ge211::Random_source<int> random_y_coor_;
     ge211::Random_source<int> random_speed_;
+    ge211::Random_source<int> chance_of_assist_spawn_;
+    ge211::Random_source<int> heart_or_weapon_boost_;
 };
