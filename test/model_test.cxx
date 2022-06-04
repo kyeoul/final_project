@@ -37,6 +37,7 @@ struct Test_access
     void add_enemy(Enemy enemy);
     void add_assist(Assists assist);
     void add_bullet(Bullet bullet);
+    void update_player(Player player);
 };
 
 Test_access::Test_access(Model& model)
@@ -60,6 +61,13 @@ Test_access::add_bullet(Bullet bullet)
 {
     model.bullets.push_back(bullet);
 }
+
+void
+Test_access::update_player(Player player2)
+{
+    model.player = player2;
+}
+
 
 
 TEST_CASE("Model test - test player collision with enemy"){
@@ -115,11 +123,15 @@ TEST_CASE("Model test - test bullet collision with enemy"){
 }
 
 TEST_CASE("Model test - test player collision with projectile upgrader"){
-    Model m({1024, 720});
+    Model m({100, 100});
 
     Test_access access(m);
 
-    Player::Posn player_pos = {0,0};
+    Player::Posn player_pos = {50,50};
+
+    Player new_player(3, {50, 50}, player_pos);
+
+    access.update_player(new_player);
 
     Assists new_assist({50,50}, player_pos, 2, 0);
     access.add_assist(new_assist);
