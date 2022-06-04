@@ -129,11 +129,13 @@ Model::on_frame(double dt)
             if(player.is_colliding(assist.get_box())){
                 if(assist.get_benefits().second == 1){
                     player.increment_health(1);
-                    assist.increment_health(-1);
+                    assist = assists.back();
+                    assists.pop_back();
                 }else if(assist.get_benefits().first == 1.5)
                 {
                     radius += 1000;
-                    assist.increment_health(-1);
+                    assist = assists.back();
+                    assists.pop_back();
                 }
             }
         }
