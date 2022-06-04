@@ -27,8 +27,6 @@ Model::spawn_enemy()
 {
     ge211::Posn<double> candidate_position = {(double) random_x_coor_.next(),
                                               (double) player_height};
-
-    ge211::Posn<float> position_float = candidate_position.into<float>();
     // while (candidate_position.x < screen_dims.width && candidate_position.x >
     //         0){
     //     candidate_position.x = random_x_coor_.next();
@@ -61,8 +59,6 @@ Model::spawn_assist()
 {
     ge211::Posn<double> candidate_position = {(double) random_x_coor_.next(),
                                               (double) random_y_coor_.next()};
-
-    ge211::Posn<float> position_float = candidate_position.into<float>();
 
     if(heart_or_weapon_boost_.next() == 1)
     {
@@ -132,7 +128,7 @@ Model::on_frame(double dt)
                     player.increment_health(1);
                     assist = assists.back();
                     assists.pop_back();
-                }else if(assist.get_benefits().first == bullet_multiplier)
+                }else if(assist.get_benefits().first > 0)
                 {
                     radius *= assist.get_benefits().first;
                     assist = assists.back();
